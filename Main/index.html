@@ -17,28 +17,28 @@
             <a href="https://github.com/Codigo-Comentado" target="_blank" rel="noopener noreferrer">
                 <img id="logo" src="img_codigo_comentado.png" alt="Logo-código_comentado" width="50" height="50">
             </a>
-            <h1 id="ranking-title">Ranking</h1>
+            <h1 id="ranking-title">Ranking de Colaboração</h1>
         </div>
         <div class="bloco">
             <div class="card-participantes">
-                <i class="fa-regular fa-star fa-2xl " style="color: rgb(82, 203, 59);"></i>
+                <i class="fa-regular fa-star fa-2xl" style="color: #10B981;"></i>
                 <h2>Total de Participantes</h2>
                 <!-- Adicionado ID aqui -->
                 <h1 id="total-participantes">Carregando...</h1>
             </div>
 
             <div class="card-prs">
-                <i class="fa-brands fa-github fa-2xl" style="color: rgb(18, 94, 233);"></i>
+                <i class="fa-brands fa-github fa-2xl" style="color: #2563EB;"></i>
                 <h2>Total de PRs</h2>
                 <!-- Adicionado ID aqui -->
                 <h1 id="total-prs">Carregando...</h1>
             </div>
 
             <div class="card-date">
-                <i class="fa-regular fa-calendar fa-2xl" style="color: rgb(255, 29, 29);"></i>
+                <i class="fa-regular fa-calendar fa-2xl" style="color: #7C3AED;"></i>
                 <h2>Data</h2>
                 <h1 id="current-date"></h1>
-                <h4 id="days-left"></h4>
+                <h5 id="days-left"></h5>
             </div>
         </div>
     </header>
@@ -47,19 +47,19 @@
     <section>
         <div class="podium">
             <div class="card-primeiro">
-                <h2 id="primeiro">1º Lugar <i class="fa-solid fa-trophy fa-lg" style="color: rgb(255, 212, 59);"></i>
+                <h2 id="primeiro">1º Lugar <i class="fa-solid fa-trophy fa-lg" style="color: #D3AF37;"></i>
                 </h2>
                 <!-- Adicionado ID aqui -->
                 <p id="nome-primeiro">-</p>
             </div>
             <div class="card-segundo">
-                <h2 id="segundo">2º Lugar <i class="fa-solid fa-medal fa-lg" style="color: rgb(203, 201, 193);"></i>
+                <h2 id="segundo">2º Lugar <i class="fa-solid fa-medal fa-lg" style="color: #CBC9C1;"></i>
                 </h2>
                 <!-- Adicionado ID aqui -->
                 <p id="nome-segundo">-</p>
             </div>
             <div class="card-terceiro">
-                <h2 id="terceiro">3º Lugar <i class="fa-solid fa-medal fa-lg" style="color: rgb(158, 76, 0) ;"></i></h2>
+                <h2 id="terceiro">3º Lugar <i class="fa-solid fa-medal fa-lg" style="color: #9E4C00;"></i></h2>
                 <!-- Adicionado ID aqui -->
                 <p id="nome-terceiro">-</p>
             </div>
@@ -98,7 +98,7 @@
             const day = String(currentDate.getDate()).padStart(2, '0');
             const date = document.getElementById('current-date');
             date.innerHTML = `${day}/${month}/${year}`;
-            
+
             // Ajuste simples para não mostrar número negativo se passar dos 90 dias
             const diasFaltantes = 90 - Number(day);
             document.getElementById('days-left').innerText = `Faltam ${diasFaltantes > 0 ? diasFaltantes : 0} dias para o fechamento`;
@@ -138,7 +138,7 @@
                             <td>${nome}</td>
                             <td>${quantidade}</td>
                         `;
-                        
+
                         // Adiciona a linha na tabela HTML
                         tabelaCorpo.appendChild(linha);
                     });
