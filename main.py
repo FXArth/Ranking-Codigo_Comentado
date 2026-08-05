@@ -73,19 +73,3 @@ def ranking_endpoint():
         "quantidade_contribuidores": len(ranking),
         "ranking_top_contribuidores": ranking
     }
-
-"""
-A função 'merged_prs' só pode ser inicializada com os parâmetros 'owner, repo, token';
-
-Todas as informações que a api do github passar serão armazenadas na lista 'dados', os dados serão lidos de 100 em 100 como está dito na variável 'params', para acessar o github é necessário o 'TOKEN' que o próprio github fornece;
-
-Criamos uma variável response para hospedar a requisição https (requests.get) que é composta pela url, os 'headers' e os 'params'. Se response diferente de Sucesso (200), quebra o código;
-
-Criamos 'prs' para armazenar o json que a api do github nos entregar. Armazenando em uma variável do python, o prórpio python agora, consegue alterar tudo o que estiver dentro, livremente. Caso a varável 'prs' esteja vazia, quer dizer que acabaram as infos do site e o loop quebra.
-
-Nova variável 'pr', portanto para toda 'pr' e 'prs', se a data do merge não estiver vazia (se houver data de merge) o merge é adicionado 'append' à variável 'pr'. O ciclo volta e somando 1 a página, por isso é necessário no início registrar 'page = 1'.
-
-Contribuidores fica guardado na lista 'contributors'
-
-'Counter' conta quantas vezes aparece o nome de cada contribuidor
-"""
