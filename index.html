@@ -69,7 +69,10 @@
     <!--tabela do ranking--->
     <section>
         <div class="table-ranking">
-            <h3>Ranking Geral</h3>
+            <div class="ranking-header">
+                <h3>Ranking Geral</h3>
+                <input type="text" id="busca-ranking" placeholder="Buscar...">
+            </div>
             <table>
                 <thead>
                     <tr>
@@ -157,6 +160,30 @@
 
             // Executa a função ao carregar a página
             carregarRanking();
+
+            // Captura a barra de busca
+            const inputBusca = document.getElementById('busca-ranking');
+
+            // Fica "escutando" cada vez que o usuário digita algo ('input')
+            inputBusca.addEventListener('input', function () {
+                // Converte o que foi digitado para minúsculo para evitar erro de Case Sensitive
+                const termo = this.value.toLowerCase();
+
+                // Pega todas as linhas (<tr>) que estão dentro do corpo da tabela
+                const linhas = document.querySelectorAll('#tabela-corpo tr');
+
+                linhas.forEach(linha => {
+                    // Acessa a segunda coluna (índice 1), onde está o nome do contribuidor
+                    const nome = linha.children[1].textContent.toLowerCase();
+
+                    // Se o nome incluir o termo digitado, mostra a linha. Se não, esconde (display = 'none').
+                    if (nome.includes(termo)) {
+                        linha.style.display = '';
+                    } else {
+                        linha.style.display = 'none';
+                    }
+                });
+            });
         </script>
     </section>
 </body>
