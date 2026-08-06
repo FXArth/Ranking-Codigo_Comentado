@@ -36,6 +36,7 @@ def merged_prs(owner, repo, token):
 
         response = requests.get(url, headers=headers, params=params)    
         if response.status_code != 200:         # 200 = Sucesso
+            print(f"🚨 ERRO DO GITHUB: Status {response.status_code} | Detalhe: {response.text}")
             break
             
         prs = response.json()
