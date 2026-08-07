@@ -55,15 +55,16 @@ def merged_prs(owner, repo, token):
 
 
 # --- REGRA DE NEGÓCIOS: Extração e Filtro de Contribuidores ---
-def build_ranking(prs):
-    # 1. Definimos quem são os mantenedores que não devem competir
-    mantenedores = ["FXArth", "Morcineck", "ohlm1"]
 
-    # 2. Extrai os nomes, mas IGNORA quem estiver na lista acima
+def build_ranking(prs):
+    # 1. Definimos a lista estritamente com letras minúsculas
+    mantenedores = ["fxarth", "morcineck", "ohlm1"]
+
+    # 2. Extrai os nomes, usando o .lower() para forçar tudo para minúsculo antes de comparar
     contributors = [
         pr["user"]["login"] 
         for pr in prs 
-        if pr["user"]["login"] not in mantenedores
+        if pr["user"]["login"].lower() not in mantenedores
     ]
     
     # 3. Conta e monta o ranking apenas com a comunidade
