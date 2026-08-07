@@ -12,7 +12,6 @@
 
 <body>
 
-    <!---Dados do projeto--->
     <header>
         <div class="header">
             <a href="https://github.com/Codigo-Comentado" target="_blank" rel="noopener noreferrer">
@@ -24,15 +23,13 @@
             <div class="card-participantes">
                 <i class="fa-regular fa-star fa-2xl" style="color: #10B981;"></i>
                 <h2>Total de Participantes</h2>
-                <!-- Adicionado ID aqui -->
                 <h1 id="total-participantes">Carregando...</h1>
             </div>
 
-            <div class="card-prs">
+            <div class="card-merges">
                 <i class="fa-brands fa-github fa-2xl" style="color: #2563EB;"></i>
-                <h2>Total de PRs</h2>
-                <!-- Adicionado ID aqui -->
-                <h1 id="total-prs">Carregando...</h1>
+                <h2>Total de Merges</h2>
+                <h1 id="total-merges">Carregando...</h1>
             </div>
 
             <div class="card-date">
@@ -44,30 +41,23 @@
         </div>
     </header>
 
-    <!--Pódium-->
     <section>
         <div class="podium">
             <div class="card-primeiro">
-                <h2 id="primeiro">1º Lugar <i class="fa-solid fa-trophy fa-lg" style="color: #D3AF37;"></i>
-                </h2>
-                <!-- Adicionado ID aqui -->
+                <h2 id="primeiro">1º Lugar <i class="fa-solid fa-trophy fa-lg" style="color: #D3AF37;"></i></h2>
                 <p id="nome-primeiro">-</p>
             </div>
             <div class="card-segundo">
-                <h2 id="segundo">2º Lugar <i class="fa-solid fa-medal fa-lg" style="color: #CBC9C1;"></i>
-                </h2>
-                <!-- Adicionado ID aqui -->
+                <h2 id="segundo">2º Lugar <i class="fa-solid fa-medal fa-lg" style="color: #CBC9C1;"></i></h2>
                 <p id="nome-segundo">-</p>
             </div>
             <div class="card-terceiro">
                 <h2 id="terceiro">3º Lugar <i class="fa-solid fa-medal fa-lg" style="color: #9E4C00;"></i></h2>
-                <!-- Adicionado ID aqui -->
                 <p id="nome-terceiro">-</p>
             </div>
         </div>
     </section>
 
-    <!--tabela do ranking--->
     <section>
         <div class="table-ranking">
             <div class="ranking-header">
@@ -79,10 +69,9 @@
                     <tr>
                         <th>Posição</th>
                         <th>Nome</th>
-                        <th>PRs</th>
+                        <th>Merges</th>
                     </tr>
                 </thead>
-                <!-- Adicionado ID aqui e limpado o conteúdo estático -->
                 <tbody id="tabela-corpo">
                     <tr>
                         <td colspan="3" style="text-align: center;">Carregando dados do GitHub...</td>
@@ -92,10 +81,9 @@
         </div>
     </section>
 
-    <!--Data e Dias Restantes // Chamada da API-->
     <section>
         <script>
-            // --- CÓDIGO DA DATA (MANTIDO O SEU) ---
+            // Data
             const currentDate = new Date();
             const year = currentDate.getFullYear();
             const month = String(currentDate.getMonth() + 1).padStart(2, '0');
@@ -103,24 +91,24 @@
             const date = document.getElementById('current-date');
             date.innerHTML = `${day}/${month}/${year}`;
 
-            // Ajuste simples para não mostrar número negativo se passar dos 90 dias
             const diasFaltantes = 90 - Number(day);
             document.getElementById('days-left').innerText = `Faltam ${diasFaltantes > 0 ? diasFaltantes : 0} dias para o fechamento`;
 
-            // --- FUNÇÃO DE INTEGRAÇÃO COM A API ---
             async function carregarRanking() {
                 try {
-                    // 1. Chama a API
-                    const response = await fetch("https://ranking-codigo-comentado.onrender.com/ranking");
+                    // TRUQUE SÊNIOR: Define a URL correta dependendo se está no PC ou na nuvem
+                    const API_URL = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost" 
+                        ? "http://127.0.0.1:8000/ranking" 
+                        : "https://ranking-codigo-comentado.onrender.com/ranking";
+                    
+                    const response = await fetch(API_URL);
                     const data = await response.json();
 
-                    // 2. Preenche os Cards do Cabeçalho
                     document.getElementById("total-participantes").innerText = data.quantidade_contribuidores;
-                    document.getElementById("total-prs").innerText = data.total_prs_aprovados;
+                    document.getElementById("total-merges").innerText = data.total_merges;
 
                     const ranking = data.ranking_top_contribuidores;
 
-                    // 3. Preenche o Pódium (Agora com links para o GitHub)
                     if (ranking.length > 0) {
                         const nome1 = ranking[0][0];
                         document.getElementById("nome-primeiro").innerHTML = `<a href="https://github.com/${nome1}" target="_blank" class="github-link">${nome1}</a>`;
@@ -134,29 +122,22 @@
                         document.getElementById("nome-terceiro").innerHTML = `<a href="https://github.com/${nome3}" target="_blank" class="github-link">${nome3}</a>`;
                     }
 
-                    // 4. Preenche a Tabela Geral (A partir do 4º lugar)
                     const tabelaCorpo = document.getElementById("tabela-corpo");
-                    tabelaCorpo.innerHTML = ""; // Limpa a mensagem de "Carregando..."
+                    tabelaCorpo.innerHTML = ""; 
 
-                    // O slice(3) fatia a lista e pega apenas do 4º elemento em diante!
                     const rankingGeral = ranking.slice(3);
 
                     rankingGeral.forEach((contribuinte, index) => {
                         const nome = contribuinte[0];
                         const quantidade = contribuinte[1];
-
-                        // Como fatiamos a lista, o index voltou para 0. Somamos 4 para ter a posição real.
                         const posicao = index + 4;
 
-                        // Cria a linha (<tr>) e as colunas (<td>) dinamicamente
                         const linha = document.createElement("tr");
                         linha.innerHTML = `
-        <td>${posicao}</td>
-        <td><a href="https://github.com/${nome}" target="_blank" class="github-link">${nome}</a></td>
-        <td>${quantidade}</td>
-    `;
-
-                        // Adiciona a linha na tabela HTML
+                            <td>${posicao}</td>
+                            <td><a href="https://github.com/${nome}" target="_blank" class="github-link">${nome}</a></td>
+                            <td>${quantidade}</td>
+                        `;
                         tabelaCorpo.appendChild(linha);
                     });
 
@@ -172,25 +153,16 @@
                 }
             }
 
-            // Executa a função ao carregar a página
             carregarRanking();
 
-            // Captura a barra de busca
+            // Busca
             const inputBusca = document.getElementById('busca-ranking');
-
-            // Fica "escutando" cada vez que o usuário digita algo ('input')
             inputBusca.addEventListener('input', function () {
-                // Converte o que foi digitado para minúsculo para evitar erro de Case Sensitive
                 const termo = this.value.toLowerCase();
-
-                // Pega todas as linhas (<tr>) que estão dentro do corpo da tabela
                 const linhas = document.querySelectorAll('#tabela-corpo tr');
 
                 linhas.forEach(linha => {
-                    // Acessa a segunda coluna (índice 1), onde está o nome do contribuidor
                     const nome = linha.children[1].textContent.toLowerCase();
-
-                    // Se o nome incluir o termo digitado, mostra a linha. Se não, esconde (display = 'none').
                     if (nome.includes(termo)) {
                         linha.style.display = '';
                     } else {

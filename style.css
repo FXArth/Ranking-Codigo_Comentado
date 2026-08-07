@@ -90,7 +90,7 @@ div.card {
   padding-bottom: 40px;
 }
 
-div.card-participantes, div.card-prs, div.card-date {
+div.card-participantes, div.card-merges, div.card-date {
   background-color: var(--superficie);
   border: 1px solid var(--borda);
   border-radius: 20px;
@@ -102,7 +102,7 @@ div.card-participantes, div.card-prs, div.card-date {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
 }
 
-div.card-participantes h2, div.card-prs h2, div.card-date h2 {
+div.card-participantes h2, div.card-merges h2, div.card-date h2 {
   font-size: 16px;
   font-weight: 500;
   color: var(--texto-secundario);
@@ -115,7 +115,7 @@ div.card-participantes h2, div.card-prs h2, div.card-date h2 {
   transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
-.card-prs:hover {
+.card-merges:hover {
   background-color: var(--superficie-hover);
   box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
   transform: translateY(-10px);
