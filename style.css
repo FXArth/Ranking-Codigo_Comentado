@@ -147,36 +147,38 @@ div.card-participantes h2, div.card-prs h2, div.card-date h2 {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Organiza o título e a busca lado a lado */
+/* ==========================================================
+   RANKING HEADER & BUSCA
+   ========================================================== */
 .ranking-header {
   display: flex;
-  justify-content: center; /* Agora o título ficará perfeitamente no centro */
+  justify-content: center; 
   align-items: center;
-  position: relative; /* Cria uma "parede invisível" para prender a busca */
+  position: relative; 
   margin-bottom: 20px;
   padding: 0 20px; 
 }
 
-/* Estiliza a barra de busca com a cara do seu projeto */
 #busca-ranking {
-  position: absolute; /* Solta a barra do centro */
-  right: 20px; /* Prende ela a exatos 20px da borda direita */  
+  position: absolute; 
+  right: 20px; 
   padding: 10px 15px;
   border-radius: 20px;
   border: 2px solid #8f8d8de2;
-  background-color: #1E2937;
-  color: #ffffff;
-  font-family: "Google Sans", sans-serif;
+  background-color: var(--fundo);
+  color: var(--texto);
   width: 250px;
-  outline: none; /* Tira aquela borda azul padrão feia do navegador */
-  transition: border-color 0.3s ease;
+  outline: none; 
+  transition: width 0.4s ease-in-out, border-color 0.3s ease; /* Animação de largura adicionada */
 }
 
-/* Efeito de foco quando o usuário clica para digitar */
 #busca-ranking:focus {
-  border-color: rgb(18, 94, 233); /* Brilha com a mesma cor do hover dos cards */
+  border-color: var(--azul-principal); /* Utilizando seu design token */
 }
 
+/* ==========================================================
+   TABELA E PÓDIO
+   ========================================================== */
 div.table-ranking {
   background-color: var(--superficie);
   border: 1px solid var(--borda);
@@ -299,8 +301,10 @@ td, th {
 }
 
 /* ==========================================================
-   REGRAS DE RESPONSIVIDADE (Apenas para telas menores)
+   REGRAS DE RESPONSIVIDADE (Tablets e Celulares)
    ========================================================== */
+
+/* Telas médias (Tablets e Notebooks pequenos) */
 @media (max-width: 1100px) {
   div.header {
     display: flex;
@@ -311,5 +315,29 @@ td, th {
 
   #logo {
     position: static;
+  }
+}
+
+/* Telas pequenas (Celulares) - Animação da Busca */
+@media (max-width: 768px) {
+  /* Esconde o título principal para poupar espaço */
+  .ranking-header h2 {
+    display: none;
+  }
+
+  /* Estado "Fechado" da barra de busca no mobile */
+  #busca-ranking {
+    position: relative;
+    right: auto;
+    width: 130px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  /* Estado "Aberto" (quando recebe o clique/foco) */
+  #busca-ranking:focus {
+    width: 90%;
+    max-width: 350px;
+    text-align: left;
   }
 }
