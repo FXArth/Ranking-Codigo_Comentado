@@ -268,6 +268,20 @@ div.card-terceiro {
 #segundo { color: var(--prata); }
 #terceiro { color: var(--bronze); }
 
+/* ==========================================================
+   ESTILIZAÇÃO DOS LINKS DO GITHUB
+   ========================================================== */
+.github-link {
+    color: inherit; /* Puxa a cor pai (Ouro, Prata, Bronze ou o branco da tabela) */
+    text-decoration: none; /* Remove o sublinhado feio padrão */
+    transition: opacity 0.3s ease; /* Transição suave */
+}
+
+.github-link:hover {
+    opacity: 0.7; /* Dá um leve efeito de brilho/transparência ao passar o mouse */
+    text-decoration: underline; /* Coloca o sublinhado apenas no hover para indicar que é clicável */
+}
+
 table {
   width: 100%;
   table-layout: fixed;

@@ -120,28 +120,41 @@
 
                     const ranking = data.ranking_top_contribuidores;
 
-                    // 3. Preenche o Pódium (verifica se a pessoa existe no ranking antes de inserir)
-                    if (ranking.length > 0) document.getElementById("nome-primeiro").innerText = ranking[0][0];
-                    if (ranking.length > 1) document.getElementById("nome-segundo").innerText = ranking[1][0];
-                    if (ranking.length > 2) document.getElementById("nome-terceiro").innerText = ranking[2][0];
+                    // 3. Preenche o Pódium (Agora com links para o GitHub)
+                    if (ranking.length > 0) {
+                        const nome1 = ranking[0][0];
+                        document.getElementById("nome-primeiro").innerHTML = `<a href="https://github.com/${nome1}" target="_blank" class="github-link">${nome1}</a>`;
+                    }
+                    if (ranking.length > 1) {
+                        const nome2 = ranking[1][0];
+                        document.getElementById("nome-segundo").innerHTML = `<a href="https://github.com/${nome2}" target="_blank" class="github-link">${nome2}</a>`;
+                    }
+                    if (ranking.length > 2) {
+                        const nome3 = ranking[2][0];
+                        document.getElementById("nome-terceiro").innerHTML = `<a href="https://github.com/${nome3}" target="_blank" class="github-link">${nome3}</a>`;
+                    }
 
-                    // 4. Preenche a Tabela Geral
+                    // 4. Preenche a Tabela Geral (A partir do 4º lugar)
                     const tabelaCorpo = document.getElementById("tabela-corpo");
                     tabelaCorpo.innerHTML = ""; // Limpa a mensagem de "Carregando..."
 
-                    // Percorre todos os itens do ranking
-                    ranking.forEach((contribuinte, index) => {
+                    // O slice(3) fatia a lista e pega apenas do 4º elemento em diante!
+                    const rankingGeral = ranking.slice(3);
+
+                    rankingGeral.forEach((contribuinte, index) => {
                         const nome = contribuinte[0];
                         const quantidade = contribuinte[1];
-                        const posicao = index + 1; // O index começa em 0, então somamos 1
+
+                        // Como fatiamos a lista, o index voltou para 0. Somamos 4 para ter a posição real.
+                        const posicao = index + 4;
 
                         // Cria a linha (<tr>) e as colunas (<td>) dinamicamente
                         const linha = document.createElement("tr");
                         linha.innerHTML = `
-                            <td>${posicao}</td>
-                            <td>${nome}</td>
-                            <td>${quantidade}</td>
-                        `;
+        <td>${posicao}</td>
+        <td><a href="https://github.com/${nome}" target="_blank" class="github-link">${nome}</a></td>
+        <td>${quantidade}</td>
+    `;
 
                         // Adiciona a linha na tabela HTML
                         tabelaCorpo.appendChild(linha);
