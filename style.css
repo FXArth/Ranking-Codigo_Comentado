@@ -55,11 +55,10 @@ p, td, th, tr {
 }
 
 
-
 #star-text {
   position: absolute;
-  right: 25px;
-  top: 80px;
+  right: 30px;
+  top: 85px;
   color: var(--ouro);
   font-weight: 600;
   font-size: 14px;
@@ -336,13 +335,22 @@ td, th {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    margin-bottom: 10px;
   }
 
   #logo {
     position: static;
   }
+  #stars {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #star-text {
+    position: static;
+  }
 }
+
 
 /* Telas pequenas (Celulares) - Animação da Busca */
 @media (max-width: 768px) {
