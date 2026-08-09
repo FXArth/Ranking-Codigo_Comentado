@@ -14,6 +14,10 @@
 
     <header>
         <div class="header">
+            <span id="star-text"><i id="star-icon" class="fa-solid fa-star fa-xs" style="color: #D3AF37;"></i>Stars
+                <count id="star-count">0</count>
+            </span>
+
             <a href="https://github.com/Codigo-Comentado" target="_blank" rel="noopener noreferrer">
                 <img id="logo" src="img_codigo_comentado.png" alt="Logo-código_comentado" width="50" height="50">
             </a>
@@ -94,21 +98,25 @@
             const diasFaltantes = 90 - Number(day);
             document.getElementById('days-left').innerText = `Faltam ${diasFaltantes > 0 ? diasFaltantes : 0} dias para o fechamento`;
 
+            // Função ÚNICA e definitiva
             async function carregarRanking() {
                 try {
                     // TRUQUE SÊNIOR: Define a URL correta dependendo se está no PC ou na nuvem
-                    const API_URL = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost" 
-                        ? "http://127.0.0.1:8000/ranking" 
+                    const API_URL = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
+                        ? "http://127.0.0.1:8000/ranking"
                         : "https://ranking-codigo-comentado.onrender.com/ranking";
-                    
+
                     const response = await fetch(API_URL);
                     const data = await response.json();
 
+                    // 1. Injetando os dados dos Cards (incluindo as Estrelas com o ID correto)
+                    document.getElementById("star-count").innerText = data.estrelas;
                     document.getElementById("total-participantes").innerText = data.quantidade_contribuidores;
                     document.getElementById("total-merges").innerText = data.total_merges;
 
                     const ranking = data.ranking_top_contribuidores;
 
+                    // 2. Injetando dados no Pódio
                     if (ranking.length > 0) {
                         const nome1 = ranking[0][0];
                         document.getElementById("nome-primeiro").innerHTML = `<a href="https://github.com/${nome1}" target="_blank" class="github-link">${nome1}</a>`;
@@ -122,8 +130,9 @@
                         document.getElementById("nome-terceiro").innerHTML = `<a href="https://github.com/${nome3}" target="_blank" class="github-link">${nome3}</a>`;
                     }
 
+                    // 3. Montando a Tabela Geral
                     const tabelaCorpo = document.getElementById("tabela-corpo");
-                    tabelaCorpo.innerHTML = ""; 
+                    tabelaCorpo.innerHTML = "";
 
                     const rankingGeral = ranking.slice(3);
 
@@ -134,22 +143,22 @@
 
                         const linha = document.createElement("tr");
                         linha.innerHTML = `
-                            <td>${posicao}</td>
-                            <td><a href="https://github.com/${nome}" target="_blank" class="github-link">${nome}</a></td>
-                            <td>${quantidade}</td>
-                        `;
+                <td>${posicao}</td>
+                <td><a href="https://github.com/${nome}" target="_blank" class="github-link">${nome}</a></td>
+                <td>${quantidade}</td>
+            `;
                         tabelaCorpo.appendChild(linha);
                     });
 
                 } catch (erro) {
                     console.error("Erro ao conectar com a API:", erro);
                     document.getElementById("tabela-corpo").innerHTML = `
-                        <tr>
-                            <td colspan="3" style="text-align: center; color: red;">
-                                Erro ao carregar os dados. Verifique se o servidor FastAPI está rodando.
-                            </td>
-                        </tr>
-                    `;
+            <tr>
+                <td colspan="3" style="text-align: center; color: red;">
+                    Erro ao carregar os dados. Verifique se o servidor FastAPI está rodando.
+                </td>
+            </tr>
+        `;
                 }
             }
 

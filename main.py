@@ -63,15 +63,34 @@ def build_ranking(prs):
     
     return Counter(contributors).most_common()
 
+def obter_estrelas_repositorio(owner, repo, token):
+    """Busca a quantidade de estrelas de um repositório específico."""
+    url = f"https://api.github.com/repos/{owner}/{repo}"
+    
+    # Criamos o cabeçalho aqui dentro usando o seu token!
+    headers = {"Authorization": f"Bearer {token}"}
+    
+    resposta = requests.get(url, headers=headers)
+    
+    if resposta.status_code == 200:
+        dados = resposta.json()
+        return dados.get("stargazers_count", 0)
+    else:
+        print(f"Erro ao buscar estrelas: {resposta.status_code}")
+        return 0
 
 @app.get("/ranking")
 def ranking_endpoint():
     prs_mergeados = merged_prs(OWNER, REPO, TOKEN)
     ranking = build_ranking(prs_mergeados)
     
+    # 1. Executamos a função passando OWNER, REPO e também o TOKEN
+    total_estrelas = obter_estrelas_repositorio(OWNER, REPO, TOKEN)
+    
     return {
         "repositorio": f"{OWNER}/{REPO}",
-        "total_merges": len(prs_mergeados), # <-- Alteração semântica correta
+        "total_merges": len(prs_mergeados), 
         "quantidade_contribuidores": len(ranking),
-        "ranking_top_contribuidores": ranking
+        "ranking_top_contribuidores": ranking,
+        "estrelas": total_estrelas 
     }
