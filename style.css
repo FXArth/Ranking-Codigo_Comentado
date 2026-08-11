@@ -279,6 +279,13 @@ div.card-terceiro {
 #segundo { color: var(--prata); }
 #terceiro { color: var(--bronze); }
 
+.destaque-xp {
+    font-weight: bold;
+    color: inherit; /* Puxa a cor pai (Ouro, Prata, Bronze ou o branco da tabela) */
+    background-color: rgba(211, 175, 55, 0.1); /* Fundo dourado transparente */
+    border-radius: 8px;
+}
+
 /* ==========================================================
    ESTILIZAÇÃO DOS LINKS DO GITHUB
    ========================================================== */
@@ -299,9 +306,11 @@ table {
   border-collapse: collapse;
 }
 
-th:nth-child(1), td:nth-child(1) { width: 25%; }
-th:nth-child(2), td:nth-child(2) { width: 50%; }
-th:nth-child(3), td:nth-child(3) { width: 25%; }
+th:nth-child(1), td:nth-child(1) { width: 15%; }
+th:nth-child(2), td:nth-child(2) { width: 40%; }
+th:nth-child(3), td:nth-child(3) { width: 15%; }
+th:nth-child(4), td:nth-child(4) { width: 15%; }
+th:nth-child(5), td:nth-child(5) { width: 15%; }
 
 thead th {
   color: var(--texto-secundario);
@@ -349,14 +358,9 @@ td, th {
   #star-text {
     position: static;
   }
-}
 
-
-/* Telas pequenas (Celulares) - Animação da Busca */
-@media (max-width: 768px) {
-  /* Esconde o título principal para poupar espaço */
-  .ranking-header h2 {
-    display: none;
+  #cabeçalho-ranking {
+    display: flex; /* Oculta o cabeçalho da tabela em telas menores */
   }
 
   /* Estado "Fechado" da barra de busca no mobile */
