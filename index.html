@@ -15,9 +15,9 @@
     <header>
         <div class="header">
             <div id="stars">
-            <span id="star-text"><i id="star-icon" class="fa-solid fa-star fa-xs" style="color: #D3AF37;"></i>Stars
-                <count id="star-count">0</count>
-            </span>
+                <span id="star-text"><i id="star-icon" class="fa-solid fa-star fa-xs" style="color: #D3AF37;"></i>Stars
+                    <count id="star-count">0</count>
+                </span>
             </div>
 
             <a href="https://github.com/Codigo-Comentado" target="_blank" rel="noopener noreferrer">
@@ -28,7 +28,7 @@
         <div class="bloco">
             <div class="card-participantes">
                 <i class="fa-regular fa-star fa-2xl" style="color: #10B981;"></i>
-                <h2>Total de Participantes</h2>
+                <h2>Total de Contribuidores</h2>
                 <h1 id="total-participantes">Carregando...</h1>
             </div>
 
@@ -48,21 +48,37 @@
     </header>
 
     <section>
-        <div class="podium">
-            <div class="card-primeiro">
-                <h2 id="primeiro">1º Lugar <i class="fa-solid fa-trophy fa-lg" style="color: #D3AF37;"></i></h2>
-                <p id="nome-primeiro">-</p>
-            </div>
-            <div class="card-segundo">
-                <h2 id="segundo">2º Lugar <i class="fa-solid fa-medal fa-lg" style="color: #CBC9C1;"></i></h2>
-                <p id="nome-segundo">-</p>
-            </div>
-            <div class="card-terceiro">
-                <h2 id="terceiro">3º Lugar <i class="fa-solid fa-medal fa-lg" style="color: #9E4C00;"></i></h2>
-                <p id="nome-terceiro">-</p>
+    <div class="podium">
+        
+        <div class="card-primeiro card-podium" tabindex="0">
+            <h2 id="primeiro">1º Lugar <i class="fa-solid fa-trophy fa-lg" style="color: #D3AF37;"></i></h2>
+            <p id="nome-primeiro">-</p>
+
+            <div class="nuvem-premio nuvem-centro">
+                <img src="Premiação-R$150.png" alt="Premio-1" width="70" height="70">
             </div>
         </div>
-    </section>
+
+        <div class="card-segundo card-podium" tabindex="0">
+            <h2 id="segundo">2º Lugar <i class="fa-solid fa-medal fa-lg" style="color: #CBC9C1;"></i></h2>
+            <p id="nome-segundo">-</p>
+            
+            <div class="nuvem-premio nuvem-centro">
+                <img src="Premiação-R$100.png" alt="Premio-2" width="70" height="70">
+            </div>
+        </div>
+
+        <div class="card-terceiro card-podium" tabindex="0">
+            <h2 id="terceiro">3º Lugar <i class="fa-solid fa-medal fa-lg" style="color: #9E4C00;"></i></h2>
+            <p id="nome-terceiro">-</p>
+            
+            <div class="nuvem-premio nuvem-centro">
+                <img src="Premiação-R$50.png" alt="Premio-3" width="70" height="70">
+            </div>
+        </div>
+        
+    </div>
+</section>
 
     <section>
         <div class="table-ranking">
@@ -71,118 +87,25 @@
                 <input type="text" id="busca-ranking" placeholder="Buscar...">
             </div>
             <table>
-                <thead>
+                <thead id="cabeçalho-ranking">
                     <tr>
                         <th>Posição</th>
                         <th>Nome</th>
                         <th>Merges</th>
+                        <th>Reviews</th>
+                        <th>XP</th>
                     </tr>
                 </thead>
                 <tbody id="tabela-corpo">
                     <tr>
-                        <td colspan="3" style="text-align: center;">Carregando dados do GitHub...</td>
+                        <td colspan="5" style="text-align: center;">Carregando dados do GitHub...</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </section>
 
-    <section>
-        <script>
-            // Data
-            const currentDate = new Date();
-            const year = currentDate.getFullYear();
-            const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-            const day = String(currentDate.getDate()).padStart(2, '0');
-            const date = document.getElementById('current-date');
-            date.innerHTML = `${day}/${month}/${year}`;
-
-            const diasFaltantes = 90 - Number(day);
-            document.getElementById('days-left').innerText = `Faltam ${diasFaltantes > 0 ? diasFaltantes : 0} dias para o fechamento`;
-
-            // Função ÚNICA e definitiva
-            async function carregarRanking() {
-                try {
-                    // TRUQUE SÊNIOR: Define a URL correta dependendo se está no PC ou na nuvem
-                    const API_URL = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
-                        ? "http://127.0.0.1:8000/ranking"
-                        : "https://ranking-codigo-comentado.onrender.com/ranking";
-
-                    const response = await fetch(API_URL);
-                    const data = await response.json();
-
-                    // 1. Injetando os dados dos Cards (incluindo as Estrelas com o ID correto)
-                    document.getElementById("star-count").innerText = data.estrelas;
-                    document.getElementById("total-participantes").innerText = data.quantidade_contribuidores;
-                    document.getElementById("total-merges").innerText = data.total_merges;
-
-                    const ranking = data.ranking_top_contribuidores;
-
-                    // 2. Injetando dados no Pódio
-                    if (ranking.length > 0) {
-                        const nome1 = ranking[0][0];
-                        document.getElementById("nome-primeiro").innerHTML = `<a href="https://github.com/${nome1}" target="_blank" class="github-link">${nome1}</a>`;
-                    }
-                    if (ranking.length > 1) {
-                        const nome2 = ranking[1][0];
-                        document.getElementById("nome-segundo").innerHTML = `<a href="https://github.com/${nome2}" target="_blank" class="github-link">${nome2}</a>`;
-                    }
-                    if (ranking.length > 2) {
-                        const nome3 = ranking[2][0];
-                        document.getElementById("nome-terceiro").innerHTML = `<a href="https://github.com/${nome3}" target="_blank" class="github-link">${nome3}</a>`;
-                    }
-
-                    // 3. Montando a Tabela Geral
-                    const tabelaCorpo = document.getElementById("tabela-corpo");
-                    tabelaCorpo.innerHTML = "";
-
-                    const rankingGeral = ranking.slice(3);
-
-                    rankingGeral.forEach((contribuinte, index) => {
-                        const nome = contribuinte[0];
-                        const quantidade = contribuinte[1];
-                        const posicao = index + 4;
-
-                        const linha = document.createElement("tr");
-                        linha.innerHTML = `
-                <td>${posicao}</td>
-                <td><a href="https://github.com/${nome}" target="_blank" class="github-link">${nome}</a></td>
-                <td>${quantidade}</td>
-            `;
-                        tabelaCorpo.appendChild(linha);
-                    });
-
-                } catch (erro) {
-                    console.error("Erro ao conectar com a API:", erro);
-                    document.getElementById("tabela-corpo").innerHTML = `
-            <tr>
-                <td colspan="3" style="text-align: center; color: red;">
-                    Erro ao carregar os dados. Verifique se o servidor FastAPI está rodando.
-                </td>
-            </tr>
-        `;
-                }
-            }
-
-            carregarRanking();
-
-            // Busca
-            const inputBusca = document.getElementById('busca-ranking');
-            inputBusca.addEventListener('input', function () {
-                const termo = this.value.toLowerCase();
-                const linhas = document.querySelectorAll('#tabela-corpo tr');
-
-                linhas.forEach(linha => {
-                    const nome = linha.children[1].textContent.toLowerCase();
-                    if (nome.includes(termo)) {
-                        linha.style.display = '';
-                    } else {
-                        linha.style.display = 'none';
-                    }
-                });
-            });
-        </script>
-    </section>
+    <script src="script.js"></script>
 </body>
 
 </html>
