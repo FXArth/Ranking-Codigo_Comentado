@@ -73,10 +73,10 @@ def build_ranking(prs):
             # Regras de negócio de base 100
             if repo_source == "projetos":
                 xp_bank[author]["xp"] += 100
-            elif repo_source == "aulas":
-                xp_bank[author]["xp"] += 200
+            elif repo_source == "codigo_comentado":
+                xp_bank[author]["xp"] += 300
             else:
-                xp_bank[author]["xp"] += 100
+                xp_bank[author]["xp"] += 150
 
         # 2. Gamificação para os Avaliadores (Reviews)
         for label in pr.get("labels", []):
